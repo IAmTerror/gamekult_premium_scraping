@@ -64,14 +64,30 @@ def soup_cooking(session, url):
     return a_delicious_soup
 
 
-# creation of a dictionary with file names and theirs associated fake urls
-# def grab_titles_with_theirs(soup):
+# creation of a dictionary of codes items with theirs titles and links
+def get_code_items_with_theirs_titles_and_links(soup):
+    dictionary_of_codes_items_with_theirs_titles_and_links = {}
+    # get code items
+    pm_offer_container = soup.find_all('aside', {'class': 'pm__offer__container'})
+    print(pm_offer_container)
+    for elem in pm_offer_container:
+        children = elem.findChildren("span" , recursive=False)
+        for child in children:
+            dictionary_of_codes_items_with_theirs_titles_and_links[child.contents[0]] = []
+    return dictionary_of_codes_items_with_theirs_titles_and_links
 
 
 # SCRIPT ---------------------------------------------------------------------------------------------------------------
+
 # create the session with authentification
 session = payload(USERNAME, PASSWORD)
 
 # cook the soup
 soup = soup_cooking(session, url)
 print(soup)
+
+# get all datas
+datas = get_code_items_with_theirs_titles_and_links(soup)
+
+print(datas)
+
