@@ -66,14 +66,20 @@ def soup_cooking(session, url):
 
 # creation of a dictionary of codes items with theirs titles and links
 def get_code_items_with_theirs_titles_and_links(soup):
+    global child
     dictionary_of_codes_items_with_theirs_titles_and_links = {}
     # get code items
     pm_offer_container = soup.find_all('aside', {'class': 'pm__offer__container'})
-    print(pm_offer_container)
     for elem in pm_offer_container:
-        children = elem.findChildren("span" , recursive=False)
+        children = elem.findChildren("span", recursive=False)
         for child in children:
             dictionary_of_codes_items_with_theirs_titles_and_links[child.contents[0]] = []
+        # get titles
+        pm_premium_h_lg = elem.parent.parent
+        title = pm_premium_h_lg.contents[3].h4.contents[1].string
+        # get links
+        link = pm_premium_h_lg.contents[3].h4.contents[1].get('href')
+        dictionary_of_codes_items_with_theirs_titles_and_links[child.contents[0]] = [title, link]
     return dictionary_of_codes_items_with_theirs_titles_and_links
 
 
@@ -84,7 +90,6 @@ session = payload(USERNAME, PASSWORD)
 
 # cook the soup
 soup = soup_cooking(session, url)
-print(soup)
 
 # get all datas
 datas = get_code_items_with_theirs_titles_and_links(soup)
