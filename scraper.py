@@ -34,10 +34,10 @@ from credentials import *
 import requests
 from bs4 import BeautifulSoup
 
-
 # VARIABLES ------------------------------------------------------------------------------------------------------------
 
-url = "https://www.gamekult.com/mon-compte/mes-codes-premium.html"
+url_premium_base = "https://www.gamekult.com/mon-compte/mes-codes-premium.html"
+LIMIT = 14
 
 
 # FUNCTIONS ------------------------------------------------------------------------------------------------------------
@@ -53,6 +53,30 @@ def payload(username, password):
     # post the payload to the site to log in
     session.post("https://www.gamekult.com/utilisateur/connexion.html", data=payload)
     return session
+
+
+# FIX : Replace for manual limit
+# def limit_urls(session):
+#     urls_to_scrapping = []
+#     count = 1
+#     is_in_bounds = True
+#     while is_in_bounds:
+#         r = session.get(url_premium_base + "?page=" + str(count))
+#         if r.status_code == 200:
+#             urls_to_scrapping.append(r.url)
+#             count += 1
+#             print(count)
+#         else:
+#             is_in_bounds = False
+#     return urls_to_scrapping
+
+def limit_urls():
+    urls_to_scrapping = []
+    count = 1
+    for i in range(0, LIMIT):
+        urls_to_scrapping.append(url_premium_base + "?page=" + str(count))
+        count += 1
+    return urls_to_scrapping
 
 
 # cooking of a delicious soup with Beautiful Soup
@@ -89,10 +113,15 @@ def get_code_items_with_theirs_titles_and_links(soup):
 session = payload(USERNAME, PASSWORD)
 
 # cook the soup
-soup = soup_cooking(session, url)
+soup = soup_cooking(session, url_premium_base)
 
 # get all datas
 datas = get_code_items_with_theirs_titles_and_links(soup)
 
-print(datas)
+# test = limit_urls()
+# print(test)
+
+# TODO : multi URL
+# TODO optionnel : limite dynamique
+# TODO : gérer les codes déjà utilisés
 
