@@ -36,6 +36,7 @@ from bs4 import BeautifulSoup
 
 # VARIABLES ------------------------------------------------------------------------------------------------------------
 
+dictionary_of_codes_items_with_theirs_titles_and_links = {}
 url_premium_base = "https://www.gamekult.com/mon-compte/mes-codes-premium.html"
 LIMIT = 14
 
@@ -91,7 +92,6 @@ def soup_cooking(session, url):
 # creation of a dictionary of codes items with theirs titles and links
 def get_code_items_with_theirs_titles_and_links(soup):
     global child
-    dictionary_of_codes_items_with_theirs_titles_and_links = {}
     # get code items
     pm_offer_container = soup.find_all('aside', {'class': 'pm__offer__container'})
     for elem in pm_offer_container:
@@ -112,16 +112,17 @@ def get_code_items_with_theirs_titles_and_links(soup):
 # create the session with authentification
 session = payload(USERNAME, PASSWORD)
 
-# cook the soup
-soup = soup_cooking(session, url_premium_base)
+# get all pages
+urls = limit_urls()
 
-# get all datas
-datas = get_code_items_with_theirs_titles_and_links(soup)
+for url in urls:
+    # cook the soup
+    soup = soup_cooking(session, url)
+    # get all datas
+    datas = get_code_items_with_theirs_titles_and_links(soup)
 
-# test = limit_urls()
-# print(test)
 
-# TODO : multi URL
 # TODO optionnel : limite dynamique
-# TODO : gérer les codes déjà utilisés
+
+
 
