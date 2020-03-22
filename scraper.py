@@ -107,20 +107,20 @@ def get_code_items_with_theirs_titles_and_links(soup):
     return dictionary_of_codes_items_with_theirs_titles_and_links
 
 
-def format_dictionnary_to_human_readable_list(dictionnary):
-    dictionnary_to_format = dictionnary
+def format_dictionary_to_human_readable_list(dictionary):
+    dictionary_to_format = dictionary
     print("-----------------------------------------------------------------------------------------------------------")
     print("                                ARTICLES GAMEKULT PREMIUM GRATUITS                                         ")
     print("-----------------------------------------------------------------------------------------------------------")
     print("\n")
     print("SVP : prenez uniquement les articles qui vous intéressent, et laissez le reste pour les autres, merci. :)")
-    print("Il reste (à peu près) " + str(len(dictionnary_to_format)) + " codes GK Premium non partagés")
+    print("Il reste (à peu près) " + str(len(dictionary_to_format)) + " codes GK Premium non partagés")
     print("\n")
     print("-----------------------------------------------------------------------------------------------------------")
     print("\n")
-    for item in dictionnary_to_format:
-        print(dictionnary_to_format[item][0] + " --- " + item + " --- https://www.gamekult.com"
-              + dictionnary_to_format[item][1])
+    for item in dictionary_to_format:
+        print(dictionary_to_format[item][0] + " --- " + item + " --- https://www.gamekult.com"
+              + dictionary_to_format[item][1])
 
 
 # SCRIPT ---------------------------------------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ for url in urls:
     datas = get_code_items_with_theirs_titles_and_links(soup)
 
 # create a human readable list of code items, titles and links
-format_dictionnary_to_human_readable_list(dictionary_of_codes_items_with_theirs_titles_and_links)
+format_dictionary_to_human_readable_list(dictionary_of_codes_items_with_theirs_titles_and_links)
 
 
 # TODO optionnel : limite dynamique
